@@ -96,31 +96,12 @@
             z-index: 2;
         }
 
-        .left-sticker {
-            position: absolute;
-            right: 75%;
-            top: 50%;
-            transform: translateY(-50%);
-            width: clamp(50px, 15vw, 150px);
-            height: auto;
-            z-index: 1;
-        }
-
-        .right-sticker {
-            position: absolute;
-            left: 75%;
-            top: 50%;
-            transform: translateY(-50%);
-            width: clamp(50px, 15vw, 150px);
-            height: auto;
-            z-index: 1;
-        }
-
+      
         .slider-container {
             height: auto;
             width: 100%;
+            margin-top: 10%;
             max-width: 1200px;
-            margin: 0 auto;
             position: relative;
             display: flex;
             align-items: center;
@@ -131,7 +112,7 @@
         .slide-track {
             display: flex;
             width: calc(200px * 40);
-            animation: scroll 70s linear infinite;
+            animation: scroll 60s linear infinite;
         }
 
         @keyframes scroll {
@@ -173,35 +154,52 @@
         }
 
         @media screen and (max-width: 768px) {
-            .slider-container {
-                padding: 10px 0;
-            }
+    .slider-container {
+        padding: 10px 0;
+    }
 
-            img {
-                width: 150px;
-                height: 150px;
-                padding: 3px;
-            }
+    img {
+        width: 250px;  /* Increased from 150px */
+        height: 250px; /* Increased from 150px */
+        padding: 5px;
+        object-fit: cover;
+    }
 
-            .slide-track {
-                width: calc(150px * 40);
-            }
+    .slide-track {
+        width: calc(250px * 40);
+    }
 
-            @keyframes scroll {
-                0% { transform: translateX(0); }
-                100% { transform: translateX(calc(-150px * 20)); }
-            }
+    @keyframes scroll {
+        0% { transform: translateX(0); }
+        100% { transform: translateX(calc(-250px * 20)); }
+    }
 
-            .slider-container::before,
-            .slider-container::after {
-                width: 10%;
-            }
-        }
+    .slider-container::before,
+    .slider-container::after {
+        width: 10%;
+    }
+}
 
+@media screen and (max-width: 480px) {
+    img {
+        width: 300px;  /* Increased from 120px */
+        height: 250px; /* Increased from 120px */
+        padding: 5px;
+    }
+
+    .slide-track {
+        width: calc(300px * 40);
+    }
+
+    @keyframes scroll {
+        0% { transform: translateX(0); }
+        100% { transform: translateX(calc(-300px * 20)); }
+    }
+}
         @media screen and (max-width: 480px) {
             img {
-                width: 120px;
-                height: 120px;
+                width: 300px;
+                height: 250px;
                 padding: 2px;
             }
 
@@ -234,8 +232,6 @@
         <div class="hearts-container"></div>
         <h1>Happy Valentines' Day My Baby Kikay</h1>
 
-        <img src="Images/flower.gif" alt="" class="right-sticker">
-        <img src="Images/heart.gif" alt="" class="left-sticker">
         <div class="slider-container">
             <div class="slide-track">
                 <div class="slider">
