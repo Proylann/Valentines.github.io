@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #ffe6e6;
+            padding: 20px 0;
+        }
+        .container {
+            text-align: center;
+            padding: 20px;
+            width: 90%;
+            max-width: 600px;
+        }
+        .gif-container {
+            margin: 20px auto;
+            max-width: 100%;
+            height: auto;
+        }
+        .gif-container img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .message {
+            font-size: 32px;
+            margin: 30px;
+            color: #ff4d4d;
+            min-height: 80px;
+            line-height: 1.4;
+        }
+        .btn {
+            padding: 15px 30px;
+            font-size: 24px;
+            margin: 15px;
+            cursor: pointer;
+            border: none;
+            border-radius: 10px;
+            background-color: #ff4d4d;
+            color: white;
+            transition: all 0.3s;
+            min-width: 200px;
+        }
+        .btn:hover {
+            transform: scale(1.1);
+        }
+        .no-btn {
+            background-color: #999;
+            cursor: not-allowed;
+            pointer-events: none;
+        }
+        #nextPageBtn {
+            background-color: #ff1a75;
+        }
+        .yes-btn-1 {
+            font-size: 32px !important;
+            padding: 20px 40px !important;
+        }
+        .yes-btn-2 {
+            font-size: 40px !important;
+            padding: 25px 50px !important;
+        }
+        .yes-btn-3 {
+            font-size: 48px !important;
+            padding: 30px 60px !important;
+        }
+
+        @media (max-width: 480px) {
+            .message {
+                font-size: 28px;
+                margin: 20px;
+            }
+            .btn {
+                width: 80%;
+                min-width: unset;
+                padding: 15px 20px;
+            }
+            .yes-btn-1 {
+                font-size: 28px !important;
+                padding: 18px 36px !important;
+            }
+            .yes-btn-2 {
+                font-size: 36px !important;
+                padding: 22px 44px !important;
+            }
+            .yes-btn-3 {
+                font-size: 44px !important;
+                padding: 26px 52px !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="gif-container" id="gifContainer">
+            <!-- GIF will be inserted here -->
+        </div>
+        <div class="message" id="message">Heey i want to ask you something</div>
+        <div id="buttons">
+            <button class="btn" id="mainBtn">What is it?</button>
+        </div>
+    </div>
+
+    <script>
+        const messages = [
+            { 
+                text: "Helloooo My Baby, I just want to ask you something", 
+                button: "What is it?",
+                gif: "Images/hey.gif" // Replace with your GIF URL
+            },
+            { 
+                text: "Ahmmm I was just wondering...", 
+                button: "About what?",
+                gif: "Images/wondering.gif" // Replace with your GIF URL
+            },
+            { 
+                text: "IF....", 
+                button: "Hmm?",
+                gif: "Images/if.gif"// Replace with your GIF URL
+            },
+            { 
+                text: "Would you Like to be my Valentine?", 
+                buttons: ["Yes", "Oh hell nah"],
+                gif: "Images/please.gif" // Replace with your GIF URL
+            },
+            { 
+                text: "Are you sure???", 
+                button: "Yes!!!!!", 
+                yesLevel: 1,
+                gif: "Images/sure.gif" // Replace with your GIF URL
+            },
+            { 
+                text: "SURE SURE????", 
+                button: "YES!!!!", 
+                yesLevel: 2,
+                gif: "Images/really.gif" // Replace with your GIF URL
+            },
+            { 
+                text: "Okay my Baby, I love you ❤️", 
+                button: "I Love you too !", 
+                yesLevel: 3,
+                gif: "Images/final.gif" // Replace with your GIF URL
+            },
+            { 
+                text: "I have a surprise for you my Baby", 
+                button: "Here!!", 
+                final: true,
+                gif: "Images/last.gif" // Replace with your GIF URL
+            },
+        ];
+
+        let currentStep = 0;
+        const messageEl = document.getElementById('message');
+        const buttonsDiv = document.getElementById('buttons');
+        const gifContainer = document.getElementById('gifContainer');
+        const mainBtn = document.getElementById('mainBtn');
+
+        function updateContent() {
+            const currentMessage = messages[currentStep];
+            messageEl.textContent = currentMessage.text;
+
+            // Update GIF
+            gifContainer.innerHTML = `<img src="${currentMessage.gif}" alt="Valentine GIF">`;
+
+            // Clear existing buttons
+            buttonsDiv.innerHTML = '';
+
+            if (currentMessage.buttons) {
+                // Create Yes button
+                const yesBtn = document.createElement('button');
+                yesBtn.className = 'btn';
+                yesBtn.textContent = currentMessage.buttons[0];
+                yesBtn.onclick = nextStep;
+                buttonsDiv.appendChild(yesBtn);
+
+                // Create No button
+                const noBtn = document.createElement('button');
+                noBtn.className = 'btn no-btn';
+                noBtn.textContent = currentMessage.buttons[1];
+                buttonsDiv.appendChild(noBtn);
+            } else {
+                // Create single button
+                const btn = document.createElement('button');
+                btn.className = 'btn';
+                if (currentMessage.yesLevel) {
+                    btn.className += ` yes-btn-${currentMessage.yesLevel}`;
+                }
+                btn.textContent = currentMessage.button;
+                if (currentMessage.final) {
+                    btn.id = 'nextPageBtn';
+                    btn.onclick = () => {
+                        window.location.href = "For_My_Kikay.html";
+                    };
+                } else {
+                    btn.onclick = nextStep;
+                }
+                buttonsDiv.appendChild(btn);
+            }
+        }
+
+        function nextStep() {
+            currentStep++;
+            if (currentStep < messages.length) {
+                updateContent();
+            }
+        }
+
+        // Initialize first state
+        updateContent();
+    </script>
+</body>
+</html>
