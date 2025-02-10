@@ -7,14 +7,55 @@
     <style>
         body {
             min-height: 100vh;
-            display: grid;
-            place-items: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
             overflow: hidden;
             margin: 0;
             padding: 0;
             box-sizing: border-box;
             background: linear-gradient(#ffe6f0, #fff5f7);
         }
+
+        .welcome-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(#ffe6f0, #fff5f7);
+            z-index: 9999;
+        }
+
+        #startButton {
+            padding: 20px 40px;
+            font-size: 24px;
+            background: rgba(255, 105, 180, 0.8);
+            border: none;
+            border-radius: 45%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        #startButton:hover {
+            background: rgba(255, 105, 180, 1);
+            transform: scale(1.1);
+        }
+
+        #mainContent {
+            display: none;
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        /* Rest of your existing styles remain the same */
         .hearts-container {
             position: fixed;
             top: 0;
@@ -34,7 +75,6 @@
             z-index: 1;
         }
 
-
         @keyframes fall {
             0% {
                 transform: translateY(-10%) rotate(0deg);
@@ -52,12 +92,14 @@
             margin: 0;
             font-size: clamp(1.5rem, 4vw, 2.5rem);
             color: #333;
+            position: relative;
+            z-index: 2;
         }
 
         .left-sticker {
             position: absolute;
             right: 75%;
-            top: 30%;
+            top: 50%;
             transform: translateY(-50%);
             width: clamp(50px, 15vw, 150px);
             height: auto;
@@ -67,7 +109,7 @@
         .right-sticker {
             position: absolute;
             left: 75%;
-            top: 30%;
+            top: 50%;
             transform: translateY(-50%);
             width: clamp(50px, 15vw, 150px);
             height: auto;
@@ -78,7 +120,7 @@
             height: auto;
             width: 100%;
             max-width: 1200px;
-            margin-bottom: 5%;
+            margin: 0 auto;
             position: relative;
             display: flex;
             align-items: center;
@@ -108,10 +150,8 @@
             padding: 5px;
             object-fit: cover;
             border-radius: 10px;
-          
         }
 
-        
         .slider-container::before,
         .slider-container::after {
             content: '';
@@ -177,71 +217,59 @@
             h1 {
                 padding: 10px;
             }
+
+            #startButton {
+                padding: 15px 30px;
+                font-size: 20px;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="hearts-container"></div>
-    <h1>Happy Valentines' Day My Baby Kikay</h1>
+    <div class="welcome-screen" id="welcomeScreen">
+        <button id="startButton">Click to Start</button>
+    </div>
+    
+    <div id="mainContent">
+        <div class="hearts-container"></div>
+        <h1>Happy Valentines' Day My Baby Kikay</h1>
 
-    <img src="Images/flower.gif" alt="" class="right-sticker">
-    <img src="Images/heart.gif" alt="" class="left-sticker">
-    <div class="slider-container">
-        <div class="slide-track">
-            <div class="slider">
-                <img src="Images/Pic1.jpeg" alt="">
-                <img src="Images/pic20.jpg" alt="">
-                <img src="Images/pic4.jpg" alt="">
-                <img src="Images/pic3.jpg" alt="">
-                <img src="Images/pic19.jpg" alt="">
-                <img src="Images/pic14.jpg" alt="">
-                <img src="Images/pic7.jpg" alt="">
-                <img src="Images/pic10.jpg" alt="">
-                <img src="Images/pic16.jpg" alt="">
-                <img src="Images/Pic2.jpeg" alt="">
-                <img src="Images/pic12.jpg" alt="">
-                <img src="Images/pic6.jpg" alt="">
-                <img src="Images/pic18.jpg" alt="">
-                <img src="Images/pic5.jpg" alt="">
-                <img src="Images/pic8.jpg" alt="">
-                <img src="Images/pic11.jpg" alt="">
-                <img src="Images/pic134.jpg" alt="">
-                <img src="Images/pic17.jpg" alt="">
-                <img src="Images/pic15.jpg" alt="">
-                <img src="Images/pic9.jpg" alt="">
-                
-               
+        <img src="Images/flower.gif" alt="" class="right-sticker">
+        <img src="Images/heart.gif" alt="" class="left-sticker">
+        <div class="slider-container">
+            <div class="slide-track">
+                <div class="slider">
+                    <img src="Images/Pic1.jpeg" alt="">
+                    <img src="Images/pic20.jpg" alt="">
+                    <img src="Images/pic4.jpg" alt="">
+                    <img src="Images/pic3.jpg" alt="">
+                    <img src="Images/pic19.jpg" alt="">
+                    <img src="Images/pic14.jpg" alt="">
+                    <img src="Images/pic7.jpg" alt="">
+                    <img src="Images/pic10.jpg" alt="">
+                    <img src="Images/pic16.jpg" alt="">
+                    <img src="Images/Pic2.jpeg" alt="">
+                    <img src="Images/pic12.jpg" alt="">
+                    <img src="Images/pic6.jpg" alt="">
+                    <img src="Images/pic18.jpg" alt="">
+                    <img src="Images/pic5.jpg" alt="">
+                    <img src="Images/pic8.jpg" alt="">
+                    <img src="Images/pic11.jpg" alt="">
+                    <img src="Images/pic134.jpg" alt="">
+                    <img src="Images/pic17.jpg" alt="">
+                    <img src="Images/pic15.jpg" alt="">
+                    <img src="Images/pic9.jpg" alt="">
+                </div>
             </div>
         </div>
+
+        <audio id="bgMusic" loop>
+            <source src="background.mp3" type="audio/mp3">
+        </audio>
     </div>
 
-    <script>
-        // Script to create falling hearts
-        function createHeart() {
-            const heart = document.createElement('div');
-            heart.className = 'heart';
-            heart.innerHTML = '❤';
-            heart.style.left = Math.random() * 100 + 'vw';
-            heart.style.animationDuration = Math.random() * 3 + 2 + 's'; // Between 2-5s
-            heart.style.opacity = Math.random() * 0.5 + 0.3;
-            heart.style.fontSize = Math.random() * 15 + 10 + 'px'; // Between 10-25px
-            
-            document.querySelector('.hearts-container').appendChild(heart);
-            
-            // Remove heart after animation completes
-            setTimeout(() => {
-                heart.remove();
-            }, 5000);
-        }
-
-        // Create hearts at regular intervals
-        window.onload = function() {
-            setInterval(createHeart, 300); // Create a new heart every 300ms
-        }
+    <script src="script.js">
+   
     </script>
-<audio autoplay loop>
-    <source src="background.mp3" type="audio/mp3">
-</audio>
-
 </body>
 </html>
